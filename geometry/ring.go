@@ -24,6 +24,12 @@ type ringResult struct {
 }
 
 func ringContainsPoint(ring Ring, point Point, allowOnEdge bool) ringResult {
+	if ring.Empty() {
+		return ringResult{
+			hit: false,
+			idx: -1,
+		}
+	}
 	if !ring.Rect().ContainsPoint(point) { // Optimization
 		return ringResult{
 			hit: false,
@@ -98,6 +104,9 @@ func ringIntersectsPoint(ring Ring, point Point, allowOnEdge bool) ringResult {
 // }
 
 func ringContainsSegment(ring Ring, seg Segment, allowOnEdge bool) bool {
+	if ring.Empty() {
+		return false
+	}
 	if !ring.Rect().ContainsPoint(seg.A) || !ring.Rect().ContainsPoint(seg.B) { // Optimization
 		return false
 	}
